@@ -108,7 +108,7 @@ def generate_train_val_test(args):
 
 
 def main(args):
-    print("Generating training data")
+    print("Generating training data..")
     generate_train_val_test(args)
 
 
