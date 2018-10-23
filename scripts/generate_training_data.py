@@ -109,6 +109,7 @@ def main(args):
 
 
 if __name__ == "__main__":
+    print("begin...")
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output_dir", type=str, default="data/", help="Output directory."
@@ -119,5 +120,6 @@ if __name__ == "__main__":
         default="data/df_highway_2012_4mon_sample.h5",
         help="Raw traffic readings.",
     )
+    print("parser added")
     args = parser.parse_args()
     main(args)
