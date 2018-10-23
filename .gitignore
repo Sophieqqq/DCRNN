@@ -1,3 +1,7 @@
+
+# dataset - as too big to upload to Github
+data/METR-LA
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
