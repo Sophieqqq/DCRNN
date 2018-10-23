@@ -54,6 +54,7 @@ def generate_graph_seq2seq_io_data(
 
 
 def generate_train_val_test(args):
+    print("here")
     df = pd.read_hdf(args.traffic_df_filename)
     print ("args echo : "+parser.traffic_df_filename)
     # 0 is the latest observed sample.
