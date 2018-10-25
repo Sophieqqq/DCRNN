@@ -41,17 +41,19 @@ class DCRNNSupervisor(object):
         for k, v in self._data.items():
             if hasattr(v, 'shape'):
                 self._logger.info((k, v.shape))
-
+        self._logger.info('name scope:  {:d}'.format(tf.name_scope))
         # Build models.
         scaler = self._data['scaler']
         with tf.name_scope('Train'):
             with tf.variable_scope('DCRNN', reuse=False):
+                print("train------")
                 self._train_model = DCRNNModel(is_training=True, scaler=scaler,
                                                batch_size=self._data_kwargs['batch_size'],
                                                adj_mx=adj_mx, **self._model_kwargs)
 
         with tf.name_scope('Test'):
             with tf.variable_scope('DCRNN', reuse=True):
+                print("test------")
                 self._test_model = DCRNNModel(is_training=False, scaler=scaler,
                                               batch_size=self._data_kwargs['test_batch_size'],
                                               adj_mx=adj_mx, **self._model_kwargs)
