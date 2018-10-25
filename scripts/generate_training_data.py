@@ -57,13 +57,13 @@ def generate_train_val_test(args):
 
     print ("args echo : "+args.traffic_df_filename)
     df = pd.read_hdf(""+args.traffic_df_filename)
-    print("df.head: "+df.info())
+    print("df.head: ")
     # 0 is the latest observed sample.
     x_offsets = np.sort(
         # np.concatenate(([-week_size + 1, -day_size + 1], np.arange(-11, 1, 1)))
         np.concatenate((np.arange(-11, 1, 1),))
     )
-    print("x_offsets.size: "+x_offsets.size)
+    print("x_offsets.size: "+str(x_offsets.size))
     # Predict the next one hour
     print("Predict the next one hour")
     y_offsets = np.sort(np.arange(1, 13, 1))
