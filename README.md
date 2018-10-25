@@ -16,7 +16,8 @@ Yaguang Li, Rose Yu, Cyrus Shahabi, Yan Liu, [Diffusion Convolutional Recurrent 
 
 Dependency can be installed using the following command:
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
+pip3 install tables
 ```
 
 ## Data Preparation
