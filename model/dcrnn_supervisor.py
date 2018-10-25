@@ -41,7 +41,7 @@ class DCRNNSupervisor(object):
         for k, v in self._data.items():
             if hasattr(v, 'shape'):
                 self._logger.info((k, v.shape))
-        self._logger.info('name scope:  {:d}'.format(tf.name_scope))
+        self._logger.info('name scope:  '+(tf.name_scope))
         # Build models.
         scaler = self._data['scaler']
         with tf.name_scope('Train'):
