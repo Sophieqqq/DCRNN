@@ -21,7 +21,15 @@ def run_dcrnn(args):
     with tf.Session(config=tf_config) as sess:
         supervisor = DCRNNSupervisor(adj_mx=adj_mx, **config)
         supervisor.load(sess, config['train']['model_filename'])
-        outputs = supervisor.evaluate(sess)
+
+        # supervisor._test_model
+        # Save the variables to disk.
+        # save_path = supervisor._test_model.save(sess, "/tmp/test_model.ckpt")
+        save_path = 'data/model/pretrained/'
+        supervisor._saver.save(sess, save_path+"model.ckpt")
+        print("Test_Model saved in path: %s" % save_path)
+
+        outputs = supervisor.evaluate(sess) # return prediction and groundtruth
         np.savez_compressed(args.output_filename, **outputs)
         print('Predictions saved as {}.'.format(args.output_filename))
 
