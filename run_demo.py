@@ -29,9 +29,19 @@ def run_dcrnn(args):
         supervisor._saver.save(sess, save_path+"model.ckpt")
         print("Test_Model saved in path: %s" % save_path)
 
-        outputs = supervisor.evaluate(sess) # return prediction and groundtruth
-        np.savez_compressed(args.output_filename, **outputs)
-        print('Predictions saved as {}.'.format(args.output_filename))
+        ## Restore the Model
+        saver = tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
+        graph = tf.get_default_graph()
+        input_graph_def = graph.as_graph_def()
+        # sess = tf.Session()
+        saver.restore(sess, "./restore-model.ckpt")
+        print "GLOBAL Variables:"
+        print tf.global_variables()
+
+        #predict:
+        # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
+        # np.savez_compressed(args.output_filename, **outputs)
+        # print('Predictions saved as {}.'.format(args.output_filename))
 
 
 if __name__ == '__main__':
