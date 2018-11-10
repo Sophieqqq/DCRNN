@@ -26,15 +26,15 @@ def run_dcrnn(args):
         # Save the variables to disk.
         # save_path = supervisor._test_model.save(sess, "/tmp/test_model.ckpt")
         save_path = 'data/model/pretrained/'
-        supervisor._saver.save(sess, save_path+"model.ckpt")
+        supervisor._saver.save(sess, save_path+"model.ckpt") #tf.train.Saver()
         print("Test_Model saved in path: %s" % save_path)
 
         ## Restore the Model
-        saver = tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
+        saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
         # sess = tf.Session()
-        saver.restore(sess, "./restore-model.ckpt")
+        saver.restore(sess, "./model.ckpt")
         print "GLOBAL Variables:"
         print tf.global_variables()
 
