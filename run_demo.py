@@ -30,9 +30,9 @@ def run_dcrnn(args):
         print("Test_Model saved in path: %s" % save_path)
 
         ## Restore the Model
-        # saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
+        saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
         # sess = tf.Session()
-        # saver.restore(sess, save_path+"model.ckpt")
+        saver.restore(sess, save_path+"model.ckpt")
 
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
