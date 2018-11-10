@@ -31,12 +31,15 @@ def run_dcrnn(args):
 
         ## Restore the Model
         saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
+        # sess = tf.Session()
+        saver.restore(sess, save_path+"model.ckpt")
+
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
-        # sess = tf.Session()
-        saver.restore(sess, "./model.ckpt")
         print "GLOBAL Variables:"
         print tf.global_variables()
+
+
 
         #predict:
         # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
