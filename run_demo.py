@@ -36,13 +36,11 @@ def run_dcrnn(args):
 
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
-        output_node_names="mynodes"
+        output_node_names = "mynodes"
         output_graph_def = tf.graph_util.convert_variables_to_constants(
-            sess,# The session
-            input_graph_def,# input_graph_def is useful for retrieving the nodes 
-            output_node_names.split(",")
+            sess,input_graph_def,output_node_names.split(",")
         )
-        output_graph="test-model.pb"
+        output_graph = "test-model.pb"
         with tf.gfile.GFile(save_path + output_graph, "wb") as f:
             f.write(output_graph_def.SerializeToString())
 
