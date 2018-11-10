@@ -36,13 +36,14 @@ def run_dcrnn(args):
 
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
-        output_node_names = graph_pkl_filename
-        output_graph_def = tf.graph_util.convert_variables_to_constants(
-            sess,input_graph_def,output_node_names.split(",")
-        )
-        output_graph = "test-model.pb"
-        with tf.gfile.GFile(save_path + output_graph, "wb") as f:
-            f.write(output_graph_def.SerializeToString())
+        output_node_names = ""
+        print supervisor._train_model.output.op.name
+        # output_graph_def = tf.graph_util.convert_variables_to_constants(
+        #     sess,input_graph_def,output_node_names.split(",")
+        # )
+        # output_graph = "test-model.pb"
+        # with tf.gfile.GFile(save_path + output_graph, "wb") as f:
+        #     f.write(output_graph_def.SerializeToString())
 
 
 
