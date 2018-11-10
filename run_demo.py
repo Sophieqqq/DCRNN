@@ -20,24 +20,31 @@ def run_dcrnn(args):
     _, _, adj_mx = load_graph_data(graph_pkl_filename)
     with tf.Session(config=tf_config) as sess:
         supervisor = DCRNNSupervisor(adj_mx=adj_mx, **config)
-        supervisor.load(sess, config['train']['model_filename'])
+        supervisor.load(sess, config['train']['model_filename']) # self._saver.restore(sess, model_filename)
 
         # supervisor._test_model
         # Save the variables to disk.
         # save_path = supervisor._test_model.save(sess, "/tmp/test_model.ckpt")
         save_path = 'data/model/pretrained/'
-        supervisor._saver.save(sess, save_path+"model.ckpt") #tf.train.Saver()
+        # supervisor._saver.save(sess, save_path+"model.ckpt") #tf.train.Saver()
         print("Test_Model saved in path: %s" % save_path)
 
         ## Restore the Model
-        saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
+        # saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
         # sess = tf.Session()
-        saver.restore(sess, save_path+"model.ckpt")
+        # saver.restore(sess, save_path+"model.ckpt")
 
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
-        print "GLOBAL Variables:"
-        print tf.global_variables()
+        output_node_names="mynodes"
+        output_graph_def = tf.graph_util.convert_variables_to_constants(
+            sess, # The session
+            input_graph_def,# input_graph_def is useful for retrieving the nodes 
+            output_node_names.split(",")
+        )
+        output_graph="test-model.pb"
+        with tf.gfile.GFile(save_path + output_graph, "wb") as f:
+            f.write(output_graph_def.SerializeToString())
 
 
 
