@@ -37,7 +37,7 @@ def run_dcrnn(args):
         tf.train.write_graph(sess.graph_def, save_path, 'model-temp.pb', as_text=True)
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
-        output_node_names = "outputs"
+        # output_node_names = "outputs"
         # print "node2##### ", input_graph_def.node.name
         print "node Names ########################### "
         # for v in sess.graph.get_operations():
@@ -54,7 +54,7 @@ def run_dcrnn(args):
         # predict(keep it):
         outputs = supervisor.evaluate(sess) # return prediction and groundtruth
         print "PREDICTION ..........."
-        print outputs.predictions
+        print outputs['predictions']
         np.savez_compressed(args.output_filename, **outputs)
         print('Predictions saved as {}.'.format(args.output_filename))
 
