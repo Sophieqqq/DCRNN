@@ -33,7 +33,7 @@ def run_dcrnn(args):
         saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
         # sess = tf.Session()
         saver.restore(sess, save_path+"model.ckpt")
-
+        tf.train.write_graph(sess.graph_def, save_path, 'model-temp.pb', as_text=True)
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
         output_node_names = "outputs"
