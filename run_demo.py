@@ -37,7 +37,6 @@ def run_dcrnn(args):
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
         output_node_names = "outputs"
-        print "node1##### ", graph.node
         print "node2##### ", input_graph_def.node
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
         #     sess,input_graph_def,output_node_names.split(",")
