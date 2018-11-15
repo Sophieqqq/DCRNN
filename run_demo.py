@@ -54,7 +54,6 @@ def run_dcrnn(args):
         # predict(keep it):
         outputs = supervisor.evaluate(sess) # return prediction and groundtruth
         print "PREDICTION ..........."
-        print outputs['predictions']
         np.savez_compressed(args.output_filename, **outputs)
         print('Predictions saved as {}.'.format(args.output_filename))
 
