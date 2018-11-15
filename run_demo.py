@@ -39,8 +39,9 @@ def run_dcrnn(args):
         output_node_names = "outputs"
         # print "node2##### ", input_graph_def.node.name
         print "node########################### "
-        for v in sess.graph.get_operations():
-                print(v.name)
+        # for v in sess.graph.get_operations():
+        #         print(v.name)
+        print len(sess.graph.get_operations())
 
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
         #     sess,input_graph_def,output_node_names.split(",")
@@ -49,7 +50,7 @@ def run_dcrnn(args):
         # with tf.gfile.GFile(save_path + output_graph, "wb") as f:
         #     f.write(output_graph_def.SerializeToString())
 
-        #predict:
+        #predict(keep it):
         # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
         # np.savez_compressed(args.output_filename, **outputs)
         # print('Predictions saved as {}.'.format(args.output_filename))
