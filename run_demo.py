@@ -33,12 +33,13 @@ def run_dcrnn(args):
         saver = supervisor._saver#tf.train.import_meta_graph(save_path+'model.ckpt.meta', clear_devices=True)
         # sess = tf.Session()
         saver.restore(sess, save_path+"model.ckpt")
+
         tf.train.write_graph(sess.graph_def, save_path, 'model-temp.pb', as_text=True)
         graph = tf.get_default_graph()
         input_graph_def = graph.as_graph_def()
         output_node_names = "outputs"
         # print "node2##### ", input_graph_def.node.name
-        print "node########################### "
+        print "node Names ########################### "
         # for v in sess.graph.get_operations():
         #         print(v.name)
         print len(sess.graph.get_operations())
@@ -50,10 +51,12 @@ def run_dcrnn(args):
         # with tf.gfile.GFile(save_path + output_graph, "wb") as f:
         #     f.write(output_graph_def.SerializeToString())
 
-        #predict(keep it):
-        # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
-        # np.savez_compressed(args.output_filename, **outputs)
-        # print('Predictions saved as {}.'.format(args.output_filename))
+        # predict(keep it):
+        outputs = supervisor.evaluate(sess) # return prediction and groundtruth
+        print "PREDICTION ..........."
+        print outputs.predictions
+        np.savez_compressed(args.output_filename, **outputs)
+        print('Predictions saved as {}.'.format(args.output_filename))
 
 
 if __name__ == '__main__':
