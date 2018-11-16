@@ -25,7 +25,7 @@ def run_dcrnn(args):
         # supervisor._test_model
         # Save the variables to disk.
         # save_path = supervisor._test_model.save(sess, "/tmp/test_model.ckpt")
-        save_path = 'data/model/pretrained/'
+        save_path = 'data/model/pretrained/severing'
         # supervisor._saver.save(sess, save_path+"model.ckpt") #tf.train.Saver()
         print("Test_Model saved in path: %s" % save_path)
 
@@ -34,8 +34,9 @@ def run_dcrnn(args):
         # sess = tf.Session()
         saver.restore(sess, save_path+"model.ckpt")
 
-        tf.train.write_graph(sess.graph_def, save_path, 'model-temp.pb', as_text=True)
+        # tf.train.write_graph(sess.graph_def, save_path, 'model-temp.pb', as_text=True)
         graph = tf.get_default_graph()
+
         input_graph_def = graph.as_graph_def()
         # output_node_names = "outputs"
         # print "node2##### ", input_graph_def.node.name
@@ -43,6 +44,11 @@ def run_dcrnn(args):
         # for v in sess.graph.get_operations():
         #         print(v.name)
         print len(sess.graph.get_operations())
+
+        saved_model_dir = save_path+ '/pb_model'
+        builder = tf.saved_model.builder.SavedModelBuilder(saved_model_dir)
+        builder.add_meta_graph_and_variables(sess, ['tag_string'])
+        builder.save()
 
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
         #     sess,input_graph_def,output_node_names.split(",")
@@ -52,10 +58,10 @@ def run_dcrnn(args):
         #     f.write(output_graph_def.SerializeToString())
 
         # predict(keep it):
-        outputs = supervisor.evaluate(sess) # return prediction and groundtruth
-        print "PREDICTION ..........."
-        np.savez_compressed(args.output_filename, **outputs)
-        print('Predictions saved as {}.'.format(args.output_filename))
+        # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
+        # print "PREDICTION ..........."
+        # np.savez_compressed(args.output_filename, **outputs)
+        # print('Predictions saved as {}.'.format(args.output_filename))
 
 
 if __name__ == '__main__':
