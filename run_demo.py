@@ -47,7 +47,7 @@ def run_dcrnn(args):
 
         saved_model_dir = save_path+ '/pb_model'
         builder = tf.saved_model.builder.SavedModelBuilder(saved_model_dir)
-        builder.add_meta_graph_and_variables(sess, ['tag_string'])
+        builder.add_meta_graph_and_variables(sess, ['tag_constants.SERVING'])
         builder.save()
 
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
