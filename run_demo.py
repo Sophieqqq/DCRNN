@@ -25,7 +25,7 @@ def run_dcrnn(args):
         # supervisor._test_model
         # Save the variables to disk.
         # save_path = supervisor._test_model.save(sess, "/tmp/test_model.ckpt")
-        save_path = 'data/model/pretrained/severing'
+        save_path = 'data/model/pretrained'
         # supervisor._saver.save(sess, save_path+"model.ckpt") #tf.train.Saver()
         print("Test_Model saved in path: %s" % save_path)
 
@@ -47,7 +47,7 @@ def run_dcrnn(args):
 
         saved_model_dir = save_path+ '/pb_model'
         builder = tf.saved_model.builder.SavedModelBuilder(saved_model_dir)
-        builder.add_meta_graph_and_variables(sess, ['tag_constants.SERVING'])
+        builder.add_meta_graph_and_variables(sess, ['tf.saved_model.tag_constants.SERVING'])
         builder.save()
 
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
