@@ -47,7 +47,7 @@ def run_dcrnn(args):
 
         saved_model_dir = save_path+ 'pb_model'
         builder = tf.saved_model.builder.SavedModelBuilder(saved_model_dir)
-        builder.add_meta_graph_and_variables(sess, ['tf.saved_model.tag_constants.SERVING'])
+        builder.add_meta_graph_and_variables(sess, ['serve'])
         builder.save()
 
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
@@ -58,7 +58,7 @@ def run_dcrnn(args):
         #     f.write(output_graph_def.SerializeToString())
 
         # predict(keep it):
-        # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
+        outputs = supervisor.evaluate(sess) # return prediction and groundtruth
         # print "PREDICTION ..........."
         # np.savez_compressed(args.output_filename, **outputs)
         # print('Predictions saved as {}.'.format(args.output_filename))
