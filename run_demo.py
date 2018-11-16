@@ -45,9 +45,25 @@ def run_dcrnn(args):
         #         print(v.name)
         print len(sess.graph.get_operations())
 
-        saved_model_dir = save_path+ 'pb_model'
+        x = tf.SignatureDef.inputs
+        y = tf.SignatureDef.outputs
+        print "tf.SignatureDef...."
+        print x, y
+        tensor_info_x = tf.saved_model.utils.build_tensor_info(x)
+        tensor_info_y = tf.saved_model.utils.build_tensor_info(y)
+        print "tensor_info_... "
+        print tensor_info_x
+        print tensor_info_y
+        prediction_signature = (
+            tf.saved_model.signature_def_utils.build_signature_def(
+                inputs={'images': tensor_info_x},
+                outputs={'scores': tensor_info_y},
+                method_name="tensorflow/serving/predict"))
+        saved_model_dir = save_path+'pb_model'
         builder = tf.saved_model.builder.SavedModelBuilder(saved_model_dir)
-        builder.add_meta_graph_and_variables(sess, ['serve'])
+        builder.add_meta_graph_and_variables(sess, ['serve'], signature_def_map={
+            tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY:
+                prediction_signature })
         builder.save()
 
         # output_graph_def = tf.graph_util.convert_variables_to_constants(
@@ -58,7 +74,7 @@ def run_dcrnn(args):
         #     f.write(output_graph_def.SerializeToString())
 
         # predict(keep it):
-        outputs = supervisor.evaluate(sess) # return prediction and groundtruth
+        # outputs = supervisor.evaluate(sess) # return prediction and groundtruth
         # print "PREDICTION ..........."
         # np.savez_compressed(args.output_filename, **outputs)
         # print('Predictions saved as {}.'.format(args.output_filename))
