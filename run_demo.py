@@ -45,8 +45,8 @@ def run_dcrnn(args):
         #         print(v.name)
         print len(sess.graph.get_operations())
 
-        x = tf.saved_model.inputs
-        y = tf.saved_model.outputs
+        x = supervisor._test_model.inputs
+        y = supervisor._test_model.outputs
         print "tf.SignatureDef...."
         print x, y
         tensor_info_x = tf.saved_model.utils.build_tensor_info(x)
